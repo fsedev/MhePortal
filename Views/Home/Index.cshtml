@@ -1,0 +1,47 @@
+@model IEnumerable<mheportal.Models.PortalLinkDataModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-4">MHE Portal</h1>
+
+<div class="alert alert-success" role="alert">
+  To add, edit or delete link items use the  <a asp-action="Admin">Admin interface</a> 
+</div>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+        <td>
+        @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>        
+        <a href="@item.LinkUrl">@Html.DisplayFor(modelItem => item.LinkUrl)</a>        
+        </td>       
+        </tr>
+        } 
+    </tbody>
+</table>

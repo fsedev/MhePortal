@@ -1,0 +1,38 @@
+version: "3"
+services:
+  
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: mikmak       
+
+      
+    volumes:
+    - db-data:/var/lib/postgresql/data 
+    networks:
+    - mhenet
+    deploy:
+      placement:
+        constraints: [node.role == manager]  
+  
+  
+  mheportal:
+    image: mheportal:v1
+    ports:
+    - 5001:5001
+    networks:
+    - mhenet    
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure        
+  
+
+networks:
+  mhenet:
+
+volumes:
+  db-data:
